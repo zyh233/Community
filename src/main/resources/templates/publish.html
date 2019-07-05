@@ -6,6 +6,7 @@
     <title>同态加密社区</title>
 <!--    th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"-->
     <link href="css/bootstrap.min.css"  rel="stylesheet">
+    <link href="css/community.css"  rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/bootstrap-theme.min.css"  rel="stylesheet">
 
@@ -26,22 +27,6 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-<!--            <ul class="nav navbar-nav">-->
-<!--                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
-<!--                <li><a href="#">Link</a></li>-->
-<!--                <li class="dropdown">-->
-<!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li><a href="#">Action</a></li>-->
-<!--                        <li><a href="#">Another action</a></li>-->
-<!--                        <li><a href="#">Something else here</a></li>-->
-<!--                        <li role="separator" class="divider"></li>-->
-<!--                        <li><a href="#">Separated link</a></li>-->
-<!--                        <li role="separator" class="divider"></li>-->
-<!--                        <li><a href="#">One more separated link</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--            </ul>-->
             <form class="navbar-form navbar-left">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search">
@@ -67,6 +52,43 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true">发起问题</span></h2>
+            <hr>
+            <form action="/publish" method="post">
+                <div class="form-group">
+                    <label for="title">标题</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题" required="required">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">问题描述</label>
+                    <textarea class="form-control" id="description" name="description" placeholder="请输入问题详细信息，以便于回答" style="height: 300px" required="required"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tag">添加标签</label>
+                    <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签(以逗号隔开)" required="required">
+                </div>
+<!--                <span class="alert alert-danger", th:text="${error}" th:if="${error != null}"></span>-->
+                <p style="color: red" th:text="${error}" th:if="${error != null}"></p>
+                <button type="submit" class="btn btn-success btn-publish">提交</button>
+            </form>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h4>1、如何做一次Elasticsearch技术分享？</h4>
+            <a href="https://0x7.me/AD7Eb">https://0x7.me/AD7Eb</a>
+            <h4>2、SpringBoot2.x集成Elasticsearch6.4.2实践</h4>
+            <a href="https://0x7.me/2Pbf">https://0x7.me/2Pbf</a>
+            <h4>3、Laravel下的Elasticsearch 使用</h4>
+            <a href="https://0x7.me/6pdJ">https://0x7.me/6pdJ</a>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

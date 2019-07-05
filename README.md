@@ -1,7 +1,7 @@
 ##同态加密社区
 
 
-##
+##建表语句
 ```sql
 create table USER
 (
@@ -16,3 +16,4 @@ create table USER
 );
 
 ```
+###flyway mvn flyway:migrate

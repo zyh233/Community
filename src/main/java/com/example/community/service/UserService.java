@@ -18,4 +18,9 @@ public class UserService {
     public User getUserByToken(String token) {
         return mapper.getUserByToken(token);
     }
+
+    public User getUserByAccountId(String id) {
+        User user = mapper.getUserByAccountId(id);
+        return user;
+    }
 }
