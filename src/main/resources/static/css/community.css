@@ -1,5 +1,5 @@
 .main {
-    margin: 30px;
+    margin: 40px;
     background-color: white;
 }
 body {
@@ -9,4 +9,15 @@ body {
     width: 150px;
     margin-bottom: 20px;
     float: right;
+}
+
+.media-object {
+    width: 45px;
+    height: 45px;
+}
+
+.text_desc {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
 }

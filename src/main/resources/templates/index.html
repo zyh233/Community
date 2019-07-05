@@ -6,11 +6,11 @@
     <title>同态加密社区</title>
 <!--    th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"-->
     <link href="css/bootstrap.min.css"  rel="stylesheet">
+    <link href="css/community.css"  rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/bootstrap-theme.min.css"  rel="stylesheet">
 
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
-
 
 </head>
 <body>
@@ -21,27 +21,11 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">同态加密</span>
             </button>
-            <a class="navbar-brand" href="#">同态加密</a>
+            <a class="navbar-brand" href="/index">同态加密社区</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-<!--            <ul class="nav navbar-nav">-->
-<!--                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
-<!--                <li><a href="#">Link</a></li>-->
-<!--                <li class="dropdown">-->
-<!--                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
-<!--                    <ul class="dropdown-menu">-->
-<!--                        <li><a href="#">Action</a></li>-->
-<!--                        <li><a href="#">Another action</a></li>-->
-<!--                        <li><a href="#">Something else here</a></li>-->
-<!--                        <li role="separator" class="divider"></li>-->
-<!--                        <li><a href="#">Separated link</a></li>-->
-<!--                        <li role="separator" class="divider"></li>-->
-<!--                        <li><a href="#">One more separated link</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--            </ul>-->
             <form class="navbar-form navbar-left">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search">
@@ -67,6 +51,34 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+<div class="container-fluid main">
+    <div class="row">
+
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-list" aria-hidden="true">发现</span></h2>
+            <hr>
+            <div class="media" th:each="question: ${questions}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-rounded" th:src="${question.user.getAvatarUrl()}" src="https://avatars2.githubusercontent.com/u/24801624?v=4" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h3 class="media-heading" th:text="${question.getTitle()}">Media heading</h3>
+                    <span th:text="${question.getDescription()}">好看阿松大啊是第三方是德国的观点时尚大方多个给对方岁的法国？</span>
+                    <span class="text_desc">[[${question.getCommentCount()}]]个评论 • [[${question.getViewCount()}]] 次浏览 •
+                        [[${question.getLikeCount()}]]喜欢 • [[${#dates.format(question.getGmtCreate(), "yyyy-MM-dd HH:mm")}]]</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h4>热门话题</h4>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

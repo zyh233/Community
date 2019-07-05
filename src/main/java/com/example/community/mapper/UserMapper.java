@@ -16,7 +16,8 @@ public interface UserMapper {
     int deleteUserById(Integer id);
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into user (name, account_id, token, gmt_create, gmt_modified) values(#{name}, #{accountId}, #{token}, #{gmtCreate}, #{gmtModified})")
+    @Insert("insert into user (name, account_id, token, gmt_create, gmt_modified, avatar_url) " +
+            "values(#{name}, #{accountId}, #{token}, #{gmtCreate}, #{gmtModified}, #{avatarUrl})")
     int insertUser(User user);
 
     @Update("update user set name=#{name}, age=#{age}, email=#{email}, birth=#{birth} where id=#{id}")
@@ -24,4 +25,7 @@ public interface UserMapper {
 
     @Select("select * from user where token = #{token}")
     User getUserByToken(String token);
+
+    @Select("select * from user where id = #{id}")
+    User getUserById(Integer id);
 }
