@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: param
+    password: param
+    url: jdbc:h2:D:/project/community
+    driver-class-name: org.h2.Driver
+
+#    schema:
+#      - classpath:department.sql
