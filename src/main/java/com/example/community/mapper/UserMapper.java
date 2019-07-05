@@ -22,4 +22,6 @@ public interface UserMapper {
     @Update("update user set name=#{name}, age=#{age}, email=#{email}, birth=#{birth} where id=#{id}")
     int updateUser(User user);
 
+    @Select("select * from user where token = #{token}")
+    User getUserByToken(String token);
 }

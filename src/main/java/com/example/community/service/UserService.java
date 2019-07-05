@@ -11,7 +11,11 @@ public class UserService {
     private UserMapper mapper;
 
     public void insertUser(User user) {
-        int i = mapper.insertUser(user);
+        mapper.insertUser(user);
 
+    }
+
+    public User getUserByToken(String token) {
+        return mapper.getUserByToken(token);
     }
 }
