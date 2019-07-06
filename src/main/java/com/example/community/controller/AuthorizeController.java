@@ -57,7 +57,6 @@ public class AuthorizeController {
                 userService.insertUser(user);
             }
             response.addCookie(new Cookie("token", user.getToken()));
-            //request.getSession().setAttribute("user", githubUser);
             return "redirect:/index";
         } else {
             return "redirect:/index";

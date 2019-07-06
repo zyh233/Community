@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="${question.title}"></title>
+    <!--    th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"-->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/community.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:replace="navigation :: navbar"></div>
+
+<div class="container-fluid main profile">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h3><span th:text="${question.title}"></span></h3>
+            <span class="text_desc" style="font-size: 14px">
+                &nbsp;&nbsp;
+                作者：[[${question.user.name}]] |
+                评论数:[[${question.getCommentCount()}]] |
+                浏览数:[[${question.getViewCount()}]] |
+                点赞数:[[${question.getLikeCount()}]] |
+                发布时间:[[${#dates.format(question.getGmtCreate(), "yyyy-MM-dd")}]]
+            </span>
+            <hr>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 community-content" th:text="${question.description}"></div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <a th:href="@{'/publish/'+${question.id}}">
+                <span class="glyphicon glyphicon-pencil community-menu" aria-hidden="true">编辑</span>
+            </a>
+
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3>发起人</h3>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-circle" th:src="${question.user.getAvatarUrl()}"
+                                 src="https://avatars2.githubusercontent.com/u/24801624?v=4" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <span th:text="${question.user.name}" style="display: block; line-height: 50px"></span>
+                        </h4>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                相关问题
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -17,3 +17,6 @@ create table USER
 
 ```
 ###flyway mvn flyway:migrate
+
+###
+一键格式化代碼： Ctrl+Alt+L
