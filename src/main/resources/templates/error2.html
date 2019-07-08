@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>出错了...</title>
+    <!--    th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"-->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/community.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+
+</head>
+<body>
+<div th:replace="navigation :: navbar"></div>
+
+<div class="container-fluid main">
+    <div class="row">
+        <div class="jumbotron">
+            <h1>页面出现错误</h1>
+            <p th:text="${errorMessage}">...</p>
+            <p><a class="btn btn-primary btn-lg" href="/index" role="button">首页</a></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

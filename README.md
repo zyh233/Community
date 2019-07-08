@@ -20,3 +20,8 @@ create table USER
 
 ###
 一键格式化代碼： Ctrl+Alt+L
+自动清除无用导入：ctrl+alt+o
+Ctrl+E 最近打开的文件
+Ctrl+Shift+N
+
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate

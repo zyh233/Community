@@ -1,9 +1,10 @@
 .main {
-    margin: 40px;
+    margin: 80px;
     background-color: white;
 }
 body {
-    background-color: #efefef;
+    background-color: #0f0f3f;
+    background-image: url("images/bg.jpg");
 }
 .btn-publish {
     width: 150px;

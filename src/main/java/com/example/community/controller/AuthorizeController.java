@@ -45,21 +45,25 @@ public class AuthorizeController {
         System.out.println(token);
         GithubUser githubUser = provider.getGithubUser(token);
         if(githubUser != null) {
-            User user = userService.getUserByAccountId(String.valueOf(githubUser.getId()));
-            if (user == null) {
-                user = new User();
-                user.setAccountId(String.valueOf(githubUser.getId()));
-                user.setToken(UUID.randomUUID().toString());
-                user.setName(githubUser.getName());
-                user.setGmtCreate(System.currentTimeMillis());
-                user.setGmtModified(user.getGmtCreate());
-                user.setAvatarUrl(githubUser.getAvatar_url());
-                userService.insertUser(user);
-            }
+            User user = new User();
+            user.setAccountId(String.valueOf(githubUser.getId()));
+            user.setToken(UUID.randomUUID().toString());
+            user.setName(githubUser.getName());
+            user.setAvatarUrl(githubUser.getAvatar_url());
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token", user.getToken()));
             return "redirect:/index";
         } else {
             return "redirect:/index";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/index";
     }
 }

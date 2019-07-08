@@ -24,7 +24,7 @@
             <div class="media" th:each="question: ${pagination.questions}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded" th:src="${question.user.getAvatarUrl()}"
+                        <img class="media-object img-rounded" th:src="${question.user.avatarUrl}"
                              src="https://avatars2.githubusercontent.com/u/24801624?v=4" alt="...">
                     </a>
                 </div>
