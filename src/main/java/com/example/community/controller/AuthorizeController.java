@@ -42,7 +42,6 @@ public class AuthorizeController {
         dto.setRedirect_uri(redirectUri);
         dto.setState(state);
         String token = provider.getAccessToken(dto);
-        System.out.println(token);
         GithubUser githubUser = provider.getGithubUser(token);
         if(githubUser != null) {
             User user = new User();

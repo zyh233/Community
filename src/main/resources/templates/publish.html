@@ -30,7 +30,7 @@
 
                 <div class="form-group" style="margin: 20px">
                     <label for="description">问题描述</label>
-                    <textarea class="form-control" id="description" name="description" placeholder="请输入问题详细信息，以便于回答..." style="height: 300px"
+                    <textarea class="form-control" rows="10" id="description" name="description" placeholder="请输入问题详细信息，以便于回答..." style="height: 300px"
                               required="required" th:text="${editQuestion!=null ? editQuestion.description : ''}"></textarea>
                 </div>
 

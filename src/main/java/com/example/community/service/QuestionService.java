@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -58,7 +59,9 @@ public class QuestionService {
         if(page > totalPage) page = totalPage;
         Integer offset = size * (page - 1);
 
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset,size));
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("gmt_create desc");
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset,size));
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question : questions) {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -92,6 +95,9 @@ public class QuestionService {
             question.setGmtModified(question.getGmtCreate());
             User user = (User) request.getSession().getAttribute("user");
             question.setCreator(user.getId());
+            question.setCommentCount(0);
+            question.setViewCount(0);
+            question.setLikeCount(0);
             questionMapper.insert(question);
         } else {
             question.setGmtModified(System.currentTimeMillis());
@@ -106,14 +112,28 @@ public class QuestionService {
     }
 
     public void incrementView(Integer id) {
-        //Question question = questionMapper.selectByPrimaryKey(id);
         Question question = new Question();
-//        questionUpdate.setViewCount(question.getViewCount() + 1);
-//        QuestionExample example = new QuestionExample();
-//        example.createCriteria().andIdEqualTo(id);
         question.setId(id);
         question.setViewCount(1);
-//        questionMapper.updateByExampleSelective(questionUpdate, example);
         questionExtMapper.incrementView(question);
+    }
+
+    public List<QuestionDTO> selectRelated(QuestionDTO questionDTO) {
+
+        if (questionDTO.getTag() == null) {
+            return new ArrayList<>();
+        }
+        String[] tags = questionDTO.getTag().split(",");
+        String regex = String.join("|", tags);
+        Question question = new Question();
+        question.setId(questionDTO.getId());
+        question.setTag(regex);
+        List<Question> questions = questionExtMapper.selectRelated(question);
+        List<QuestionDTO> collect = questions.stream().map(q -> {
+            QuestionDTO dto = new QuestionDTO();
+            BeanUtils.copyProperties(q, dto);
+            return dto;
+        }).collect(Collectors.toList());
+        return collect;
     }
 }

@@ -18,7 +18,7 @@ public class IndexController {
     @GetMapping("/index")
     public String index(Model model, @RequestParam(value = "page", defaultValue = "1") Integer page) {
 
-        Pagination questions = questionService.getQuestions(page,5);
+        Pagination questions = questionService.getQuestions(page,7);
 
         model.addAttribute("pagination", questions);
         return "index";

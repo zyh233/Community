@@ -36,13 +36,13 @@ public class SessionInterceptor implements HandlerInterceptor {
 
                     if (users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
-                        return true;
+//                        return true;
                     }
                     break;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     @Override

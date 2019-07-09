@@ -1,10 +1,11 @@
 .main {
-    margin: 80px;
-    background-color: white;
+    margin: 50px;
+    opacity: 1.2;
+    background-color: #fffff7;
 }
 body {
-    background-color: #0f0f3f;
-    background-image: url("images/bg.jpg");
+    /*background-color: #0f0f3f;*/
+    background-image: url("/images/timg.jfif");
 }
 .btn-publish {
     width: 150px;
@@ -34,8 +35,91 @@ body {
 .community-menu {
     color: #999999;
     font-size: 14px;
+    float: right;
 }
 
 .community-content {
     font-size: 14px;
+}
+
+.community-comment {
+    margin-bottom: 20px;
+}
+
+.menu {
+    color: #999999;
+}
+
+.menu .icon {
+    margin-right: 15px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.menu .icon:hover {
+    color: #2b669a;
+}
+
+.menu .blue {
+    color: #2b669a;
+}
+.comment-name {
+    font-size: 16px;
+    font-family: 楷体;
+    color: #9d9d9d
+}
+.comment-content {
+    font-size: 16px;
+    font-family: 楷体;
+}
+
+.comments {
+    margin-bottom: 15px;
+    border-bottom: #eeeeee dashed 1px;
+    padding-bottom: 10px;
+}
+
+.desc-label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.comment-sp {
+    margin-top: 0;
+}
+.my-edit {
+    float: left;
+    margin-top: 0px;
+}
+
+.question-title {
+    margin-top: 30px;
+}
+
+.sub-comments {
+    margin-top: 15px;
+    border: 1px #eee dashed;
+    border-radius: 5px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
+.question-tag {
+    margin-right: 5px;
+}
+
+.related-question {
+    line-height: 20px;
+    font-size: 16px;
+    list-style: none;
+    cursor: pointer;
+    padding-left: 0px;
+}
+
+.find {
+    font-size: 30px;
+    margin-top: 20px;
+    font-family: 楷体;
 }

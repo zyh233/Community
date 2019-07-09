@@ -19,7 +19,10 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-list" aria-hidden="true">发现</span></h2>
+            <div class="find">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                <span>发现</span>
+            </div>
             <hr>
             <div class="media" th:each="question: ${pagination.questions}">
                 <div class="media-left">
@@ -32,10 +35,10 @@
                     <h3 class="media-heading">
                         <a th:href="@{'/question/'+${question.id}}" th:text="${question.getTitle()}"></a>
                     </h3>
-                    <span th:text="${question.getDescription()}"></span>
+                    <span th:text="${question.description}"></span>
                     <br>
-                    <span class="text_desc">&nbsp;&nbsp;[[${question.getCommentCount()}]]个评论 • [[${question.getViewCount()}]] 次浏览 •
-                        [[${question.getLikeCount()}]]喜欢 • [[${#dates.format(question.getGmtCreate(), "yyyy-MM-dd HH:mm")}]]</span>
+                    <span class="text_desc">&nbsp;&nbsp;[[${question.commentCount}]]评论 • [[${question.viewCount}]] 次浏览 •
+                        [[${question.likeCount}]]喜欢 • [[${#dates.format(question.gmtCreate, "yyyy-MM-dd HH:mm")}]]</span>
                 </div>
             </div>
 
