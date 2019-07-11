@@ -4,29 +4,6 @@
 function post() {
     var questionId = $("#question_id").val();
     var content = $("#comment_content").val();
-    // if (!content.trim()) {
-    //     alert("回复不能为空!");
-    //     return;
-    // }
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/comment",
-    //     contentType: "application/json",
-    //     data: JSON.stringify({
-    //         "parentId": questionId,
-    //         "content": content,
-    //         "type": 1
-    //     }),
-    //     success: function (response) {
-    //         if (response.code == 200) {
-    //             //$("#comment_content").val("");
-    //             window.location.reload();
-    //         } else {
-    //             alert(response.message);
-    //         }
-    //     },
-    //     dataType: "json"
-    // });
     comment2Target(questionId, content, 1);
 }
 
@@ -72,12 +49,6 @@ function getSecComment(e) {
         comments.removeClass("in");
         e.classList.remove("blue");
     } else {
-
-        // $("#list" + id).load("/comment/" + id,function (response, status, xhr) {
-        //     if (status == "success") {
-        //         console.log(response)
-        //     }
-        // });
         if (comments.children().length != 1) {
             comments.addClass("in");
             e.classList.add("blue");
@@ -122,7 +93,6 @@ function getSecComment(e) {
     }
 }
 
-
 function getMyDate(str){
     var oDate = new Date(str),
         oYear = oDate.getFullYear(),
@@ -134,9 +104,40 @@ function getMyDate(str){
         oTime = oYear +'-'+ get(oMonth) +'-'+ get(oDay);//最后拼接时间
     return oTime;
 }
+
 function get(num) {
     if (parseInt(num) < 10) {
         num = '0' + num;
     }
     return num;
+}
+
+/**
+ * 选择标签，出现在标签框中
+ * @param value
+ */
+function selectTag(e) {
+    var value = e.getAttribute("data");
+    var pre = $("#tag").val();
+    console.log(value);
+    if (pre.indexOf(value) == -1) {
+        if (pre) {
+            $("#tag").val(pre + "," + value);
+        } else {
+            $("#tag").val(value);
+        }
+    }
+}
+
+/**
+ * 点击标签输入框，显示已有标签
+ */
+function showTagTable() {
+    $("#语言1").addClass("active");
+    var display = $("#tag-table").css("display");
+    if (display == "none") {
+        $("#tag-table").css("display", "block");
+    } else {
+        $("#tag-table").css("display", "none");
+    }
 }

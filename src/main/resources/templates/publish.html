@@ -7,18 +7,21 @@
 <!--    th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"-->
     <link href="/css/bootstrap.min.css"  rel="stylesheet">
     <link href="/css/community.css"  rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link href="/css/bootstrap-theme.min.css"  rel="stylesheet">
+    <link href="/css/editormd.css"  rel="stylesheet">
+
     <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
 
 </head>
 <body>
 <div th:replace="navigation :: navbar"></div>
-<div class="container-fluid main">
+<div class="container-fluid main publish">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true">发起问题</span></h2>
+            <h2><span class="glyphicon glyphicon-pencil font" aria-hidden="true">发起问题</span></h2>
             <hr>
             <form action="/publish" method="post">
                 <input type="hidden" name="id" th:value="${editQuestion!=null ? editQuestion.id : null}">
@@ -28,30 +31,67 @@
                            required="required" th:value="${editQuestion!=null ? editQuestion.title : ''}">
                 </div>
 
-                <div class="form-group" style="margin: 20px">
-                    <label for="description">问题描述</label>
-                    <textarea class="form-control" rows="10" id="description" name="description" placeholder="请输入问题详细信息，以便于回答..." style="height: 300px"
-                              required="required" th:text="${editQuestion!=null ? editQuestion.description : ''}"></textarea>
-                </div>
+                <label for="description" style="margin-left:20px;margin-bottom: 0px">问题描述</label>
+                <div id="question-editor" class="form-group" style="margin-top: 10px">
 
+                    <textarea class="form-control" rows="10" id="description" name="description" placeholder="请输入问题详细信息，以便于回答..."
+                                  style="display: none"
+                                  required="required" th:text="${editQuestion!=null ? editQuestion.description : ''}">
+                    </textarea>
+                    <script type="text/javascript">
+                        $(function() {
+                            var editor = editormd("question-editor", {
+                                width  : "1270px",
+                                height : "400px",
+                                path   : "/js/lib/"
+                            });
+                        });
+                    </script>
+                </div>
                 <div class="form-group" style="margin: 20px">
                     <label for="tag">添加标签</label>
                     <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签(以逗号隔开)..."
-                           required="required" th:value="${editQuestion!=null ? editQuestion.tag : ''}">
+                           required="required" th:value="${editQuestion!=null ? editQuestion.tag : ''}"
+                            onclick="showTagTable()">
+
+                    <div class="tag-table" id="tag-table">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="tag,status:${tags}" th:class="${status.first?'active':''}">
+                                <a th:href="${'#' + tag.category}" aria-controls="home" role="tab" data-toggle="tab" th:text="${tag.category}"></a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content tag-table" >
+                            <div role="tabpanel" th:id="${tag.category}" th:each="tag, stat:${tags}" th:class="${stat.first?'tab-pane active':'tab-pane'}">
+                                <span>
+                                    <span class="label label-info" th:each="name:${tag.tags}" style="margin-right: 10px; margin-top: 10px">
+                                        <span class="glyphicon glyphicon-tag" onclick="selectTag(this)" th:data="${name}" th:text="${name}"></span>
+                                    </span>
+                                </span>
+
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
-<!--                <span class="alert alert-danger", th:text="${error}" th:if="${error != null}"></span>-->
                 <p style="color: red" th:text="${error}" th:if="${error != null}"></p>
                 <button type="submit" class="btn btn-success btn-publish">提交</button>
             </form>
 
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h4>1、如何做一次Elasticsearch技术分享？</h4>
-            <a href="https://0x7.me/AD7Eb">https://0x7.me/AD7Eb</a>
-            <h4>2、SpringBoot2.x集成Elasticsearch6.4.2实践</h4>
-            <a href="https://0x7.me/2Pbf">https://0x7.me/2Pbf</a>
-            <h4>3、Laravel下的Elasticsearch 使用</h4>
-            <a href="https://0x7.me/6pdJ">https://0x7.me/6pdJ</a>
+                <h3 class="font"><strong>官方推荐</strong></h3>
+                <hr>
+                <div class="font">
+                    <h4>1、如何做一次Elasticsearch技术分享？</h4>
+                    <a href="https://0x7.me/AD7Eb">https://0x7.me/AD7Eb</a>
+                    <h4>2、SpringBoot2.x集成Elasticsearch6.4.2实践</h4>
+                    <a href="https://0x7.me/2Pbf">https://0x7.me/2Pbf</a>
+                    <h4>3、Laravel下的Elasticsearch 使用</h4>
+                    <a href="https://0x7.me/6pdJ">https://0x7.me/6pdJ</a>
+                </div>
 
         </div>
     </div>

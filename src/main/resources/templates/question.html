@@ -9,13 +9,17 @@
     <link href="/css/community.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/editormd.preview.css" rel="stylesheet">
 
-    <script src="/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.4.1/jquery.js}"
-            type="application/javascript"></script>
 
+    <link rel="stylesheet" href="https://static.noisky.cn/homepage/font-awesome.min.css">
+
+<!--    th:src="@{/webjars/jquery/3.4.1/jquery.js}"-->
+
+    <script src="/js/jquery-3.2.1.slim.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-
     <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/editormd.js" type="application/javascript"></script>
 </head>
 <body>
 <div th:replace="navigation :: navbar"></div>
@@ -39,8 +43,14 @@
                     <span class="glyphicon glyphicon-pencil community-menu" aria-hidden="true">编辑</span>
                 </a>
                 <br>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 community-content"
-                     th:text="${question.description}" style="font-family: 楷体; font-size: 18px"></div>
+                <div id="question-view" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 community-content">
+                    <textarea style="display:none;" th:text="${question.description}"></textarea>
+                </div>
+                <script type="text/javascript">
+                    $(function() {
+                        editormd.markdownToHTML("question-view", {});
+                    });
+                </script>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!--标签-->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -49,15 +59,10 @@
                         <span th:text="${tag}"></span>
                     </span>
                 </div>
-
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
             </div>
-            <!--            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
-
 
             <!--回复-->
-
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4><strong><span th:if="${comments == null}">0个回复</span></strong></h4>
                 <hr th:if="${comments == null}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
@@ -107,10 +112,7 @@
                 </div>
 
             </div>
-
-
             <!--回复输入框-->
-            <!--            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px">
                 <h4><strong>期待您的回复</strong></h4>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
@@ -143,18 +145,35 @@
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-circle" th:src="${question.user.getAvatarUrl()}"
+                            <img class="media-object img-circle" th:src="${question.user.avatarUrl}"
                                  src="https://avatars2.githubusercontent.com/u/24801624?v=4" alt="...">
                         </a>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <span th:text="${question.user.name}" style="font-family: 华文楷体; line-height: 50px"></span>
+                            <span th:text="${question.user.name}" style="font-family: 华文楷体"></span>
                         </h4>
+
+                        <div>
+                            <!-- QQ -->
+                            <a href="https://wpa.qq.com/msgrd?v=3&uin=1341227188&site=qq&menu=yes" title="QQ联系我" target="_blank">
+                                <i class="social fa fa-qq"></i>
+                            </a>
+                            <!-- Weixin -->
+                            <a data-v="" href="#" title="扫一扫加我微信" class="wechat">
+                                <i class="social fa fa-weixin"></i>
+                            </a>
+                            <!-- Email -->
+                            <a href="mailto:1341227188@qq.com" title="发邮件给我">
+                                <i class="social fa fa-envelope"></i>
+                            </a>
+                        </div>
                         <br>
                     </div>
+
                 </div>
             </div>
+
             <hr class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <ul class="related-question">

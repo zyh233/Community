@@ -123,3 +123,19 @@ body {
     margin-top: 20px;
     font-family: 楷体;
 }
+
+.font {
+    font-family: 楷体;
+}
+
+.tag-table {
+    margin-top: 15px;
+}
+
+#tag-table {
+    display: none;
+}
+
+.publish .label-info {
+    cursor: pointer;
+}

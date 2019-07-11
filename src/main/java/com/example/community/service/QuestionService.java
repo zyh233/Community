@@ -31,23 +31,6 @@ public class QuestionService {
     @Autowired
     private QuestionExtMapper questionExtMapper;
 
-    public void createQuestion(String title, String description, String tag, HttpServletRequest request, Model model) throws UserException {
-        User user = (User) request.getSession().getAttribute("user");
-        if (user == null) {
-            model.addAttribute("error", "用户未登录");
-            throw new UserException("用户未登录");
-        }
-        Question question = new Question();
-        question.setTitle(title);
-        question.setDescription(description);
-        question.setTag(tag);
-        question.setCreator(user.getId());
-        long millis = System.currentTimeMillis();
-        question.setGmtCreate(millis);
-        question.setGmtModified(millis);
-        questionMapper.insert(question);
-    }
-
     public Pagination getQuestions(Integer page, Integer size) {
 
         int totalQuestion = (int) questionMapper.countByExample(new QuestionExample());
@@ -71,11 +54,16 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
         }
         Pagination pagination = new Pagination();
-        pagination.setQuestions(questionDTOS);
+        pagination.setData(questionDTOS);
         pagination.set(page, size, totalPage);
         return pagination;
     }
 
+    /**
+     * 根據Id查找問題
+     * @param id
+     * @return
+     */
     public QuestionDTO getQuestionById(Integer id) {
 
         Question question = questionMapper.selectByPrimaryKey(id);
@@ -89,6 +77,11 @@ public class QuestionService {
         return dto;
     }
 
+    /**
+     * 增加或者更新問題
+     * @param question
+     * @param request
+     */
     public void createOrUpdate(Question question, HttpServletRequest request) {
         if (question.getId() == null) {
             question.setGmtCreate(System.currentTimeMillis());
@@ -111,6 +104,10 @@ public class QuestionService {
         }
     }
 
+    /**
+     * 增加問題瀏覽數
+     * @param id
+     */
     public void incrementView(Integer id) {
         Question question = new Question();
         question.setId(id);
@@ -118,6 +115,11 @@ public class QuestionService {
         questionExtMapper.incrementView(question);
     }
 
+    /**
+     * 查找與本問題相關的問題
+     * @param questionDTO
+     * @return
+     */
     public List<QuestionDTO> selectRelated(QuestionDTO questionDTO) {
 
         if (questionDTO.getTag() == null) {

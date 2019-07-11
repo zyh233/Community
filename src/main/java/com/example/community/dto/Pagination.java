@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class Pagination {
+public class Pagination<T> {
 
     private boolean firstPage;
     private boolean previous;
@@ -14,7 +14,7 @@ public class Pagination {
     private boolean next;
     private boolean lastPage;
     private Integer totalPage;
-    private List<QuestionDTO> questions;
+    private List<T> data;
     private List<Integer> pages = new ArrayList<>();
 
     public void set(Integer page, Integer size, int totalPage) {

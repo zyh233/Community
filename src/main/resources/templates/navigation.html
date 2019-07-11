@@ -24,6 +24,7 @@
                 <li th:if="${session.user != null}">
                     <a href="/publish">提问</a>
                 </li>
+                <li><a href="/profile/replies">通知<span class="badge" th:text="${unReadCount}"></span></a></li>
                 <li th:if="${session.user == null}"><a href="https://github.com/login/oauth/authorize?client_id=76e1ba5cd4da3a176181&redirect_uri=http://localhost:8080/callback&
                        scope=user&state=5">登录</a></li>
                 <li class="dropdown" th:if="${session.user != null}">
@@ -33,6 +34,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+
                         <li><a href="/profile/questions">我的问题</a></li>
                         <li><a href="#">个人资料</a></li>
                         <li role="separator" class="divider"></li>

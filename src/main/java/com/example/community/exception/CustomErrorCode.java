@@ -6,7 +6,9 @@ public enum CustomErrorCode {
     TARGET_NOT_FOUND(2002, "要回复的问题或评论未找到"),
     SERVER_ERROR(2003, "服务器正忙..."),
     COMMENT_TYPE_NOT_EXIST(2004, "评论类型不存在"),
-    COMMENT_NOT_FOUND(2005, "评论不存在");
+    COMMENT_NOT_FOUND(2005, "评论不存在"),
+    READ_NOTIFICATION_FAIL(2006, "通知不是您的"),
+    NOTIFICATION_NOT_EXIST(2007,"通知不存在");
     private Integer code;
     private String message;
 

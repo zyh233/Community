@@ -2,6 +2,8 @@ package com.example.community.service;
 
 import com.example.community.dto.CommentReturnDTO;
 import com.example.community.enums.CommentType;
+import com.example.community.enums.NotificationStatus;
+import com.example.community.enums.NotificationType;
 import com.example.community.exception.CustomErrorCode;
 import com.example.community.exception.CustomException;
 import com.example.community.mapper.*;
@@ -39,8 +41,11 @@ public class CommentService {
     @Autowired
     CommentExtMapper commentExtMapper;
 
+    @Autowired
+    NotificationMapper notificationMapper;
+
     @Transactional
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User user) {
         if (comment.getParentId() == null || comment.getParentId() == 0) {
             throw new CustomException(CustomErrorCode.TARGET_NOT_FOUND);
         }
@@ -58,6 +63,13 @@ public class CommentService {
             commentMapper.insert(comment);
             dbComment.setCommentCount(1);
             commentExtMapper.incrementComment(dbComment);
+            Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
+            if (question == null) {
+                throw  new  CustomException(CustomErrorCode.QUESTION_NOT_FOUND);
+            }
+            //創建通知
+            createNotify(comment, dbComment.getCommentator(), NotificationType.REPLY_COMMENT, user.getName(), question.getTitle());
+
         } else {
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
             if (question == null) {
@@ -67,8 +79,23 @@ public class CommentService {
             commentMapper.insert(comment);
             question.setCommentCount(1);
             questionExtMapper.incrementComment(question);
+
+            createNotify(comment, question.getCreator(), NotificationType.REPLY_QUESTION, user.getName(), question.getTitle());
         }
 
+    }
+
+    private void createNotify(Comment comment, Integer receiver, NotificationType type, String notifier, String title) {
+        Notification notification = new Notification();
+        notification.setType(type.getType());
+        notification.setOuterid(comment.getParentId());
+        notification.setNotifier(comment.getCommentator());
+        notification.setStatus(NotificationStatus.UNREAD.getStatus());
+        notification.setReceiver(receiver);
+        notification.setNotifierName(notifier);
+        notification.setQuestionTitle(title);
+        notification.setGmtCreate(System.currentTimeMillis());
+        notificationMapper.insert(notification);
     }
 
 

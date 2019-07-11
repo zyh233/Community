@@ -1,8 +1,10 @@
 package com.example.community.controller;
 
 import com.example.community.dto.QuestionDTO;
+import com.example.community.dto.TagDTO;
 import com.example.community.model.Question;
 import com.example.community.service.QuestionService;
+import com.example.community.util.TagUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class PublishController {
@@ -20,7 +23,9 @@ public class PublishController {
     QuestionService service;
 
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        List<TagDTO> tags = TagUtil.getTags();
+        model.addAttribute("tags", tags);
         return "publish";
     }
     @PostMapping("/publish")

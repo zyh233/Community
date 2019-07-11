@@ -21,7 +21,6 @@ public class ProfileService {
     QuestionMapper mapper;
 
     public Pagination getQuestionByCreator(Integer id, Integer page, Integer size, User user) {
-//        int totalQuestion = mapper.countById(id);
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(id);
         int totalQuestion = (int) mapper.countByExample(questionExample);
@@ -33,7 +32,6 @@ public class ProfileService {
         Integer offset = size * (page - 1);
 
         List<Question> questions = mapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
-//        List<Question>  questions = mapper.getQuestionByCreator(id, offset, size);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question : questions) {
             QuestionDTO questionDTO = new QuestionDTO();
@@ -42,7 +40,7 @@ public class ProfileService {
             questionDTOS.add(questionDTO);
         }
         Pagination pagination = new Pagination();
-        pagination.setQuestions(questionDTOS);
+        pagination.setData(questionDTOS);
         pagination.set(page, size, totalPage);
         return pagination;
     }

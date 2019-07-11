@@ -20,44 +20,65 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span th:text="${sectionName}"></span></h2>
             <hr>
-            <div class="media" th:each="question: ${myQuestion.questions}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-rounded" th:src="${question.user.getAvatarUrl()}"
-                             src="https://avatars2.githubusercontent.com/u/24801624?v=4" alt="...">
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h3 class="media-heading" th:text="${question.getTitle()}">Media heading</h3>
-<!--                    <span th:text="${question.getDescription()}"></span>-->
-                    <br>
-                    <span class="text_desc">&nbsp;&nbsp;[[${question.getCommentCount()}]]个评论 • [[${question.getViewCount()}]] 次浏览 •
-                        [[${question.getLikeCount()}]]喜欢 • [[${#dates.format(question.getGmtCreate(), "yyyy-MM-dd HH:mm")}]]</span>
+<!--            我的问题-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section.equals('questions')}">
+                <div class="media" th:each="question: ${pagination.data}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded" th:src="${question.user.avatarUrl}"
+                                 src="https://avatars2.githubusercontent.com/u/24801624?v=4" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="media-heading">
+                            <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
+                        </h3>
+                        <br>
+                        <span class="text_desc">&nbsp;&nbsp;[[${question.commentCount}]]个评论 • [[${question.viewCount}]] 次浏览 •
+                        [[${question.likeCount}]]喜欢 • [[${#dates.format(question.gmtCreate, "yyyy-MM-dd HH:mm")}]]</span>
+                        <a th:href="@{'/publish/'+${question.id}}"
+                           th:if="${session.user != null && session.user.id == question.creator}">
+                            <span class="glyphicon glyphicon-pencil community-menu" aria-hidden="true">编辑</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
+<!--            最新回复-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section.equals('replies')}">
+                <div class="media" th:each="notification: ${pagination.data}">
+                    <span th:text="${notification.notifierName}"></span>
+                    回复了您的
+                    <span th:text="${notification.type == 1 ? '问题':'评论'}"></span>
+                    <a th:href="@{'/notification/'+${notification.id}}">
+                        <span th:text="${notification.questionTitle}"></span>
+                    </a>
+                    <span class="text_desc">[[${#dates.format(notification.gmtCreate, "yyyy-MM-dd HH:mm")}]]</span>
+                    <span class="label label-danger" th:if="${notification.status == 0}">未读</span>
+                </div>
+            </div>
             <nav aria-label="Page navigation" class="page">
                 <ul class="pagination">
-                    <li th:if="${myQuestion.firstPage}">
+                    <li th:if="${pagination.firstPage}">
                         <a th:href="@{'/profile/'+${section}(page=${1})}" aria-label="Previous" >
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
-                    <li th:if="${myQuestion.previous}">
-                        <a th:href="@{'/profile/'+${section}(page=${myQuestion.page}-1)}" aria-label="Previous" >
+                    <li th:if="${pagination.previous}">
+                        <a th:href="@{'/profile/'+${section}(page=${pagination.page}-1)}" aria-label="Previous" >
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
-                    <li th:each="page:${myQuestion.pages}" th:class="${page == myQuestion.page} ? 'active' : ''"><a th:href="@{'/profile/'+${section}(page=${page})}" th:text="${page}"></a></li>
+                    <li th:each="page:${pagination.pages}" th:class="${page == pagination.page} ? 'active' : ''"><a th:href="@{'/profile/'+${section}(page=${page})}" th:text="${page}"></a></li>
 
-                    <li th:if="${myQuestion.next}">
-                        <a th:href="@{'/profile/'+${section}(page=${myQuestion.page}+1)}" aria-label="Next" >
+                    <li th:if="${pagination.next}">
+                        <a th:href="@{'/profile/'+${section}(page=${pagination.page}+1)}" aria-label="Next" >
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
 
-                    <li th:if="${myQuestion.lastPage}">
-                        <a th:href="@{'/profile/'+${section}(page=${myQuestion.totalPage})}" aria-label="Next" >
+                    <li th:if="${pagination.lastPage}">
+                        <a th:href="@{'/profile/'+${section}(page=${pagination.totalPage})}" aria-label="Next" >
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
@@ -69,11 +90,11 @@
             <div class="list-group section">
                 <a href="/profile/questions" th:class="${section=='questions'} ? 'list-group-item active' : 'list-group-item'">
                     我的问题
-                    <span class="badge">14</span>
+                    <span class="badge" th:text="${questionCount}">14</span>
                 </a>
-                <a href="/profile/replies" th:class="${section=='replies'} ? 'list-group-item active' : 'list-group-item'">
+                <a href="/profile/replies" id="replies" th:class="${section=='replies'} ? 'list-group-item active' : 'list-group-item'">
                     最新回复
-                    <span class="badge">3</span>
+                    <span class="badge" th:text="${unReadCount}"></span>
                 </a>
                 <a href="#" class="list-group-item">Morbi leo risus</a>
                 <a href="#" class="list-group-item">Porta ac consectetur ac</a>
