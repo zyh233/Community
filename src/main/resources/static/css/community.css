@@ -1,7 +1,8 @@
 .main {
-    margin: 50px;
+    margin: 30px 30px;
     opacity: 1.2;
     background-color: #fffff7;
+    /*margin-bottom: 30px*/
 }
 body {
     /*background-color: #0f0f3f;*/
@@ -138,4 +139,13 @@ body {
 
 .publish .label-info {
     cursor: pointer;
+}
+
+.footer {
+    padding: 0px 45%;
+    margin-bottom: 20px;
+}
+
+.article-title {
+    margin-top: 30px;
 }

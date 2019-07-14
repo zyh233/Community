@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <meta charset="UTF-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="${article.title}"></title>
+    <!--    th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"-->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/community.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/editormd.preview.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://static.noisky.cn/homepage/font-awesome.min.css">
+
+<!--    -->
+
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/editormd.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
+</head>
+<body>
+<div th:replace="navigation :: navbar"></div>
+<div class="container-fluid main profile">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <!--问题描述-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h3 class="question-title"><strong><span th:text="${article.title}"></span></strong></h3>
+                <span class="text_desc" style="font-size: 14px">
+                    作者：[[${article.authorName}]] |
+                    发布时间:[[${#dates.format(article.gmtCreate, "yyyy-MM-dd")}]]
+                </span>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <span class="desc-label"><strong>文章内容:</strong></span>
+<!--                <a th:href="@{'/publish/'+${question.id}}"-->
+<!--                   th:if="${session.user != null && session.user.id == question.creator}">-->
+<!--                    <span class="glyphicon glyphicon-pencil community-menu" aria-hidden="true">编辑</span>-->
+<!--                </a>-->
+<!--                <br>-->
+                <div id="question-view" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 community-content">
+                    <textarea style="display: none" th:text="${article.content}"></textarea>
+<!--                    <span th:text="${question.description}"></span>-->
+                </div>
+                <script type="text/javascript">
+                    $(function() {
+                        editormd.markdownToHTML("question-view", {});
+                    });
+                </script>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <!--标签-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <span class="label label-info question-tag" th:each="tag: ${article.tag.split(',')}">
+                        <span class="glyphicon glyphicon-tag"></span>
+                        <span th:text="${tag}"></span>
+                    </span>
+                </div>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            </div>
+
+            <!--回复输入框-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px">
+                <h4><strong>期待您的回复</strong></h4>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
+                <div class="media my-edit" th:if="${session.user != null}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded" th:src="${session.user.avatarUrl}"
+                                 src="https://avatars2.githubusercontent.com/u/24801624?v=4" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <span th:text="${session.user.name}"
+                                  style="color: #9d9d9d; font-family: 华文楷体; line-height: 50px"></span>
+                        </h4>
+                        <br>
+                    </div>
+                </div>
+                <input type="hidden" id="question_id" th:value="${article.id}"/>
+                <textarea class="form-control community-comment" rows="10" id="comment_content"
+                          required="required"></textarea>
+                <button type="submit" class="btn btn-success btn-publish" onclick="post()">回复</button>
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3 class="font"><strong>官方推荐</strong></h3>
+            <hr>
+            <div class="font">
+                <h4>1、如何做一次Elasticsearch技术分享？</h4>
+                <a href="https://0x7.me/AD7Eb">https://0x7.me/AD7Eb</a>
+                <h4>2、SpringBoot2.x集成Elasticsearch6.4.2实践</h4>
+                <a href="https://0x7.me/2Pbf">https://0x7.me/2Pbf</a>
+                <h4>3、Laravel下的Elasticsearch 使用</h4>
+                <a href="https://0x7.me/6pdJ">https://0x7.me/6pdJ</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

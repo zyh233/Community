@@ -68,7 +68,7 @@ public class CommentService {
                 throw  new  CustomException(CustomErrorCode.QUESTION_NOT_FOUND);
             }
             //創建通知
-            createNotify(comment, dbComment.getCommentator(), NotificationType.REPLY_COMMENT, user.getName(), question.getTitle());
+            createNotify(comment, dbComment.getCommentator(), NotificationType.REPLY_COMMENT, user.getName(), question.getTitle(), question.getId());
 
         } else {
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
@@ -76,19 +76,23 @@ public class CommentService {
                 throw new CustomException(CustomErrorCode.QUESTION_NOT_FOUND);
             }
             //回复问题
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             question.setCommentCount(1);
             questionExtMapper.incrementComment(question);
 
-            createNotify(comment, question.getCreator(), NotificationType.REPLY_QUESTION, user.getName(), question.getTitle());
+            createNotify(comment, question.getCreator(), NotificationType.REPLY_QUESTION, user.getName(), question.getTitle(), comment.getParentId());
         }
 
     }
 
-    private void createNotify(Comment comment, Integer receiver, NotificationType type, String notifier, String title) {
+    private void createNotify(Comment comment, Integer receiver, NotificationType type, String notifier, String title, Integer outid) {
+        if (receiver == comment.getCommentator()) {
+            return;
+        }
         Notification notification = new Notification();
         notification.setType(type.getType());
-        notification.setOuterid(comment.getParentId());
+        notification.setOuterid(outid);
         notification.setNotifier(comment.getCommentator());
         notification.setStatus(NotificationStatus.UNREAD.getStatus());
         notification.setReceiver(receiver);

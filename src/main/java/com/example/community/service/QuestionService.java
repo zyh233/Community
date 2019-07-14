@@ -50,6 +50,7 @@ public class QuestionService {
             User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
+            questionDTO.setDescription(question.getDescription());
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }

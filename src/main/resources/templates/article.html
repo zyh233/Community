@@ -3,7 +3,7 @@
 <head>
 <!--    <meta charset="UTF-8">-->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>提问</title>
+    <title>写文章</title>
 <!--    th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"-->
     <link href="/css/bootstrap.min.css"  rel="stylesheet">
     <link href="/css/community.css"  rel="stylesheet">
@@ -20,44 +20,42 @@
 <div th:replace="navigation :: navbar"></div>
 <div class="container-fluid main publish">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-pencil font" aria-hidden="true">发起问题</span></h2>
-            <hr>
-            <form action="/publish" method="post">
-                <input type="hidden" name="id" th:value="${editQuestion!=null ? editQuestion.id : null}">
-                <div class="form-group" style="margin: 20px">
-                    <label for="title">标题</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题..."
-                           required="required" th:value="${editQuestion!=null ? editQuestion.title : ''}">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <form action="/article" method="post">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 article-title">
+                    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+                        <input type="text" class="form-control" name="title" placeholder="输入文章标题">
+
+                    </div>
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12" style="float: right">
+                        <button type="submit" class="btn btn-success btn-publish" style="float: left">发布</button>
+                    </div>
                 </div>
 
-                <label for="description" style="margin-left:20px;margin-bottom: 0px">问题描述</label>
-                <div id="question-editor" class="form-group" style="margin-top: 10px">
 
-                    <textarea class="form-control" rows="10" id="description" name="description" placeholder="请输入问题详细信息，以便于回答..."
-                                  style="display: none"
-                                  required="required" th:text="${editQuestion!=null ? editQuestion.description : ''}">
+                <div id="question-editor" class="form-group" style="margin-top: 10px">
+                    <textarea class="form-control" rows="10" id="description" name="content" style="display: none" required="required">
                     </textarea>
                     <script type="text/javascript">
                         $(function() {
                             var editor = editormd("question-editor", {
-                                width  : "96%",
-                                height : "400px",
+                                width  : "98%",
+                                height : "800px",
                                 path   : "/js/lib/",
                                 pluginPath : "/js/plugins/",
                                 imageUpload : true,
                                 imageFormats : ["jpg", "jpeg", "gif", "png", "bmp"],
                                 imageUploadURL : "/file/upload",
                                 saveHTMLToTextarea : true,
-                                emoji : true
+                                emoji : true,
+                                placeholder : "请输入文章内容..."
                             });
                         });
                     </script>
                 </div>
                 <div class="form-group" style="margin: 20px">
-                    <label for="tag">添加标签</label>
                     <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签(以逗号隔开)..."
-                           required="required" th:value="${editQuestion!=null ? editQuestion.tag : ''}"
+                           required="required"
                             onclick="showTagTable()">
 
                     <div class="tag-table" id="tag-table">
@@ -78,27 +76,9 @@
 
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-                <p style="color: red" th:text="${error}" th:if="${error != null}"></p>
-                <button type="submit" class="btn btn-success btn-publish">提交</button>
             </form>
-
-        </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                <h3 class="font"><strong>官方推荐</strong></h3>
-                <hr>
-                <div class="font">
-                    <h4>1、如何做一次Elasticsearch技术分享？</h4>
-                    <a href="https://0x7.me/AD7Eb">https://0x7.me/AD7Eb</a>
-                    <h4>2、SpringBoot2.x集成Elasticsearch6.4.2实践</h4>
-                    <a href="https://0x7.me/2Pbf">https://0x7.me/2Pbf</a>
-                    <h4>3、Laravel下的Elasticsearch 使用</h4>
-                    <a href="https://0x7.me/6pdJ">https://0x7.me/6pdJ</a>
-                </div>
-
         </div>
     </div>
 </div>

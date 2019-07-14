@@ -14,16 +14,17 @@
 
     <link rel="stylesheet" href="https://static.noisky.cn/homepage/font-awesome.min.css">
 
-<!--    th:src="@{/webjars/jquery/3.4.1/jquery.js}"-->
+<!--    -->
 
-    <script src="/js/jquery-3.2.1.slim.min.js" type="application/javascript"></script>
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.js}" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
     <script src="/js/editormd.js" type="application/javascript"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
 </head>
 <body>
 <div th:replace="navigation :: navbar"></div>
-
 <div class="container-fluid main profile">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
@@ -44,7 +45,8 @@
                 </a>
                 <br>
                 <div id="question-view" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 community-content">
-                    <textarea style="display:none;" th:text="${question.description}"></textarea>
+                    <textarea style="display: none" th:text="${question.description}"></textarea>
+<!--                    <span th:text="${question.description}"></span>-->
                 </div>
                 <script type="text/javascript">
                     $(function() {
@@ -116,16 +118,16 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px">
                 <h4><strong>期待您的回复</strong></h4>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-sp">
-                <div class="media my-edit">
+                <div class="media my-edit" th:if="${session.user != null}">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-rounded" th:src="${question.user.getAvatarUrl()}"
+                            <img class="media-object img-rounded" th:src="${session.user.avatarUrl}"
                                  src="https://avatars2.githubusercontent.com/u/24801624?v=4" alt="...">
                         </a>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <span th:text="${question.user.name}"
+                            <span th:text="${session.user.name}"
                                   style="color: #9d9d9d; font-family: 华文楷体; line-height: 50px"></span>
                         </h4>
                         <br>
@@ -151,24 +153,9 @@
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">
-                            <span th:text="${question.user.name}" style="font-family: 华文楷体"></span>
+                            <span th:text="${question.user.name}" style="font-family: 华文楷体; line-height: 50px"></span>
                         </h4>
-
-                        <div>
-                            <!-- QQ -->
-                            <a href="https://wpa.qq.com/msgrd?v=3&uin=1341227188&site=qq&menu=yes" title="QQ联系我" target="_blank">
-                                <i class="social fa fa-qq"></i>
-                            </a>
-                            <!-- Weixin -->
-                            <a data-v="" href="#" title="扫一扫加我微信" class="wechat">
-                                <i class="social fa fa-weixin"></i>
-                            </a>
-                            <!-- Email -->
-                            <a href="mailto:1341227188@qq.com" title="发邮件给我">
-                                <i class="social fa fa-envelope"></i>
-                            </a>
-                        </div>
-                        <br>
+<!--                        <br>-->
                     </div>
 
                 </div>
@@ -187,5 +174,6 @@
         </div>
     </div>
 </div>
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

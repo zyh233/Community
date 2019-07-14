@@ -40,8 +40,8 @@ public class ProfileController {
         } else if ("replies".equals(action)) {
             Pagination pagination = notificationService.list(user.getId(), page, size);
             model.addAttribute("pagination", pagination);
-            long count = notificationService.unReadCount(user.getId());
-            model.addAttribute("unReadCount", count);
+//            long count = notificationService.unReadCount(user.getId());
+//            model.addAttribute("unReadCount", count);
             model.addAttribute("section", "replies");
             model.addAttribute("sectionName", "最新回复");
         }
