@@ -12,13 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 
 /**
  * @author zyh
  * @version 1.0
- * @date 2019/7/12 9:56
+ * @date 2019/7/12 9:56:wq
+ *
  */
 @Controller
 public class FileController {
