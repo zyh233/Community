@@ -9,7 +9,7 @@ spring:
 #      - classpath:department.sql
 
 qcloud:
-  secretId: AKID2kpgW7JXNxOYT8Re18g7HBoBHpCKuyPa
-  secretKey: 34oLdmhMmBOwIPHMCkAMKceRqzsZFTWK
-  bucketName: coder-image-1253857571
+  secretId: ******
+  secretKey: ****
+  bucketName: ****
   region: ap-chengdu
