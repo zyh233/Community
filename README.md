@@ -1,4 +1,5 @@
 ##Coder社区
+
 ###实现的功能:
 * github账户授权登录
 * 提问功能(使用富文本editor.md)编辑以及HTML展示(可上传图片)
@@ -8,7 +9,7 @@
 * 添加文章(ElasticSearch)
 * 按关键字查找文章功能
 
-##建表语句
+###建表语句
 ```sql
 create table USER
 (
@@ -21,8 +22,8 @@ create table USER
 	constraint USER_PK
 		primary key (ID)
 );
-
 ```
+
 ###flyway 插件，用于管理更改数据库
 ```xml
             <plugin>
@@ -41,7 +42,6 @@ mvn flyway:migrate
 ``
 
 ### mybatis.generator 方便生成实体对象以及查询语句
-
 ```xml
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
@@ -59,6 +59,7 @@ mvn flyway:migrate
 ``
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 ``
+
 ###快捷键 IDEA
 * 一键格式化代碼： Ctrl+Alt+L 
 * 自动清除无用导入：ctrl+alt+o
